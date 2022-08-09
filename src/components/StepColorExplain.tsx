@@ -19,7 +19,7 @@ export default function StepColorExplain() {
             justify-content: center;
             align-items: center;
 
-            width: 57px;
+            padding: 0 6px;
             margin: 6px;
             border-radius: 6px;
             line-height: 32px;
@@ -29,8 +29,8 @@ export default function StepColorExplain() {
         >
           <div
             className={cx(css`
-              font-size: 16px;
-              font-weight: 600;
+              font-size: 15px;
+              font-weight: 500;
               color: white;
             `)}
           >

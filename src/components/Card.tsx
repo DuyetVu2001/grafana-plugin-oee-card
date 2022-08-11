@@ -23,7 +23,7 @@ export default function Card({ data }: any) {
         className={cx(css`
           position: relative;
           border: 1px solid rgb(226, 226, 226);
-          min-height: 300px;
+          min-height: 266px;
           border-radius: 6px;
           display: flex;
           flex-direction: column;
@@ -88,6 +88,7 @@ export default function Card({ data }: any) {
             justify-content: center;
             align-items: center;
             height: 100%;
+            line-height: 1.1;
           `)}
         >
           <span

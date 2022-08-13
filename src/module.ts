@@ -36,5 +36,9 @@ export const plugin = new PanelPlugin<SimpleOptions>(SimplePanel).setPanelOption
         ],
       },
       showIf: (config) => config.showSeriesCount,
+    })
+    .addTextInput({
+      path: 'cardsUrl',
+      name: 'API to render cards',
     });
 });

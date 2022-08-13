@@ -19,7 +19,7 @@ export const SimplePanel: React.FC<Props> = ({ options, data, width, height }) =
     //   .then((response) => response.json())
     //   .then((data) => setOee(data['AREA_01']['LINE_01']));
 
-    getOee()
+    getOee(options.cardsUrl)
       .then((response) => response.json())
       .then((data) => setOee(data.data));
   }, []);

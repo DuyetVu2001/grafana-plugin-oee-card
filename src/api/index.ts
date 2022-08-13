@@ -1,3 +1,3 @@
-const API = 'http://localhost:8000';
+// const API = 'http://localhost:8000/oee';
 
-export const getOee = async () => fetch(`${API}/oee`);
+export const getOee = async (url: string) => fetch(url);

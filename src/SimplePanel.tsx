@@ -22,7 +22,7 @@ export const SimplePanel: React.FC<Props> = ({ options, data, width, height }) =
     getOee(options.cardsUrl)
       .then((response) => response.json())
       .then((data) => setOee(data.data));
-  }, []);
+  }, [options.cardsUrl, data.series]);
 
   return (
     <div

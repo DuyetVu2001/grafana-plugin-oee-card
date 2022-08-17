@@ -5,7 +5,7 @@ import { IoWarningSharp } from 'react-icons/io5';
 import { Tooltip } from '@grafana/ui';
 
 export default function Card({ data }: any) {
-  const { machine_code = null, actual = 0, ng = 0, current_step = 1, error_step = 0, error_step_text = '' } = data;
+  const { machine_code = null, actual = 0, ng = 0, current_step = 1, error_step_text = '' } = data;
 
   return (
     // wrapper
@@ -31,7 +31,7 @@ export default function Card({ data }: any) {
         `)}
       >
         {/* warning */}
-        {error_step.toString() !== '0' && (
+        {error_step_text && (
           <Tooltip content={error_step_text} placement="bottom" theme="error">
             <div
               className={cx(css`

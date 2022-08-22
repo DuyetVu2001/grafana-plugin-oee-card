@@ -5,7 +5,7 @@ import { IoWarningSharp } from 'react-icons/io5';
 import { Tooltip } from '@grafana/ui';
 
 export default function Card({ data }: any) {
-  const { machine_code = null, actual = 0, ng = 0, current_step = 1, error_step_text = '' } = data;
+  const { device_id = null, actual = 0, ng = 0, current_step = 1, error_step_text = '' } = data;
 
   return (
     // wrapper
@@ -74,7 +74,7 @@ export default function Card({ data }: any) {
               font-weight: 600;
             `)}
           >
-            {machine_code}
+            {device_id}
           </div>
         </div>
 
@@ -93,7 +93,7 @@ export default function Card({ data }: any) {
         >
           <span
             className={cx(css`
-              font-size: 3.6vw;
+              font-size: 48px;
               color: rgb(255, 255, 255);
               font-weight: 600;
               text-align: center;

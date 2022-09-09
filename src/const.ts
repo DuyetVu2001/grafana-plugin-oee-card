@@ -11,7 +11,7 @@ export const STEP_COLORS = [
   },
   {
     id: 2,
-    name: 'Bơm nồi áp',
+    name: 'Bơm nội áp',
     color: '#434348',
   },
   {
@@ -21,7 +21,7 @@ export const STEP_COLORS = [
   },
   {
     id: 4,
-    name: 'Xả nồi áp',
+    name: 'Xả nội áp',
     color: '#f7a35c',
   },
   {

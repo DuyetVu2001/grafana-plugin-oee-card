@@ -66,7 +66,7 @@ export const SimplePanel: React.FC<Props> = ({ options, data, width, height }) =
           Object.keys(oee)
             .filter((oee) => oee[0] === 'M')
             .map((key) => <Card key={key} device_id={oee[key].Oee} actual={key} ng={} />)} */}
-          {oee?.length > 0 && oee.map((item: any) => <Card key={item.id} data={item} />)}
+          {oee?.length > 0 && oee.map((item: any, index: number) => <Card key={index} data={item} />)}
         </div>
       </div>
     </div>

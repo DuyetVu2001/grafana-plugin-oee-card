@@ -5,7 +5,13 @@ import { IoWarningSharp } from 'react-icons/io5';
 import { Tooltip } from '@grafana/ui';
 
 export default function Card({ data }: any) {
-  const { device_id = null, actual = 0, ng = 0, current_step = 1, error_step_text = '' } = data;
+  const {
+    // device_id = null,
+    actual = 0,
+    ng = 0,
+    current_step = 1,
+    error_step_text = '',
+  } = data;
 
   return (
     // wrapper
@@ -74,7 +80,8 @@ export default function Card({ data }: any) {
               font-weight: 600;
             `)}
           >
-            {device_id}
+            {/* {device_id} */}
+            Demo hệ thống đếm
           </div>
         </div>
 

@@ -2,9 +2,9 @@ import React, { useEffect, useState } from 'react';
 import { PanelProps } from '@grafana/data';
 import { SimpleOptions } from 'types';
 import { css, cx } from 'emotion';
-import { stylesFactory } from '@grafana/ui';
+import { Button, stylesFactory } from '@grafana/ui';
 import Card from 'components/Card';
-import { getOee } from 'api';
+import { getOee, resetCount } from 'api';
 import StepColorExplain from 'components/StepColorExplain';
 
 interface Props extends PanelProps<SimpleOptions> {}
@@ -12,17 +12,23 @@ interface Props extends PanelProps<SimpleOptions> {}
 export const SimplePanel: React.FC<Props> = ({ options, data, width, height }) => {
   const styles = getStyles();
 
-  const [oee, setOee] = useState<any>();
+  const [oee, setOee] = useState<any>([]);
 
   useEffect(() => {
     // getOee()
     //   .then((response) => response.json())
     //   .then((data) => setOee(data['AREA_01']['LINE_01']));
 
-    getOee(options.cardsUrl)
+    getOee(`${options.cardsUrl}/cards`)
       .then((response) => response.json())
       .then((data) => setOee(data.data));
   }, [options.cardsUrl, data.series]);
+
+  function handleResetCount() {
+    const queries = oee.map((item: any) => item.device_id).join('&ids=');
+
+    resetCount(`${options.cardsUrl}/reset-counter?ids=${queries}`);
+  }
 
   return (
     <div
@@ -40,7 +46,23 @@ export const SimplePanel: React.FC<Props> = ({ options, data, width, height }) =
         `
       )}
     >
-      <StepColorExplain />
+      <div>
+        <StepColorExplain />
+
+        <div
+          className={cx(
+            css`
+              display: block;
+              margin-top: 8px;
+              margin-left: 8px;
+            `
+          )}
+        >
+          <Button fill="outline" icon="repeat" onClick={handleResetCount}>
+            Reset
+          </Button>
+        </div>
+      </div>
 
       <div
         className={cx(

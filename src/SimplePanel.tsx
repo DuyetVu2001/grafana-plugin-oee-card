@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { PanelProps } from '@grafana/data';
 import { SimpleOptions } from 'types';
 import { css, cx } from 'emotion';
-import { Button, stylesFactory } from '@grafana/ui';
+import { Button, ConfirmModal, stylesFactory } from '@grafana/ui';
 import Card from 'components/Card';
 import { getOee, resetCount } from 'api';
 import StepColorExplain from 'components/StepColorExplain';
@@ -13,6 +13,7 @@ export const SimplePanel: React.FC<Props> = ({ options, data, width, height }) =
   const styles = getStyles();
 
   const [oee, setOee] = useState<any>([]);
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
 
   useEffect(() => {
     // getOee()
@@ -24,8 +25,8 @@ export const SimplePanel: React.FC<Props> = ({ options, data, width, height }) =
       .then((data) => setOee(data.data));
   }, [options.cardsUrl, data.series]);
 
-  function handleResetCount() {
-    const queries = oee.map((item: any) => item.device_id).join('&ids=');
+  function handleResetCount(ids: string[]) {
+    const queries = ids.join('&ids=');
 
     resetCount(`${options.cardsUrl}/reset-counter?ids=${queries}`);
   }
@@ -46,6 +47,22 @@ export const SimplePanel: React.FC<Props> = ({ options, data, width, height }) =
         `
       )}
     >
+      <ConfirmModal
+        isOpen={showDeleteModal}
+        title="Reset count?"
+        body="Are you sure you want to reset count of all machines?"
+        confirmText="Reset all"
+        icon="exclamation-triangle"
+        onConfirm={() => {
+          const ids = oee.map((item: any) => item.device_id);
+          handleResetCount(ids);
+          setShowDeleteModal(false);
+        }}
+        onDismiss={() => {
+          setShowDeleteModal(false);
+        }}
+      />
+
       <div>
         <StepColorExplain />
 
@@ -58,7 +75,7 @@ export const SimplePanel: React.FC<Props> = ({ options, data, width, height }) =
             `
           )}
         >
-          <Button fill="outline" icon="repeat" onClick={handleResetCount}>
+          <Button fill="outline" icon="repeat" variant="destructive" onClick={() => setShowDeleteModal(true)}>
             Reset
           </Button>
         </div>
@@ -88,7 +105,8 @@ export const SimplePanel: React.FC<Props> = ({ options, data, width, height }) =
           Object.keys(oee)
             .filter((oee) => oee[0] === 'M')
             .map((key) => <Card key={key} device_id={oee[key].Oee} actual={key} ng={} />)} */}
-          {oee?.length > 0 && oee.map((item: any, index: number) => <Card key={index} data={item} />)}
+          {oee?.length > 0 &&
+            oee.map((item: any, index: number) => <Card key={index} data={item} handleResetCount={handleResetCount} />)}
         </div>
       </div>
     </div>

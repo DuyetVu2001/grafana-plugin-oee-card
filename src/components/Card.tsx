@@ -2,16 +2,12 @@ import * as React from 'react';
 import { css, cx } from 'emotion';
 import { STEP_COLORS } from 'const';
 import { IoWarningSharp } from 'react-icons/io5';
-import { Tooltip } from '@grafana/ui';
+import { Button, ConfirmModal, Tooltip } from '@grafana/ui';
 
-export default function Card({ data }: any) {
-  const {
-    // device_id = null,
-    actual = 0,
-    ng = 0,
-    current_step = 1,
-    error_step_text = '',
-  } = data;
+export default function Card({ data, handleResetCount }: { data: any; handleResetCount: (ids: string[]) => void }) {
+  const { device_id = null, actual = 0, ng = 0, current_step = 1, error_step_text = '' } = data;
+
+  const [showDeleteModal, setShowDeleteModal] = React.useState(false);
 
   return (
     // wrapper
@@ -24,6 +20,21 @@ export default function Card({ data }: any) {
         border-radius: 6px;
       `)}
     >
+      <ConfirmModal
+        isOpen={showDeleteModal}
+        title="Reset count?"
+        body={`Are you sure you want to reset count of machine: ${device_id}?`}
+        confirmText={`Reset ${device_id}`}
+        icon="exclamation-triangle"
+        onConfirm={() => {
+          handleResetCount([device_id]);
+          setShowDeleteModal(false);
+        }}
+        onDismiss={() => {
+          setShowDeleteModal(false);
+        }}
+      />
+
       {/* box */}
       <div
         className={cx(css`
@@ -116,6 +127,15 @@ export default function Card({ data }: any) {
               `)}
             >
               ({STEP_COLORS.find((item) => item.id.toString() === current_step.toString())?.name})
+            </span>
+            <span>
+              <Button
+                size="md"
+                fill="solid"
+                variant="destructive"
+                icon="repeat"
+                onClick={() => setShowDeleteModal(true)}
+              />
             </span>
             {/* % */}
           </span>
